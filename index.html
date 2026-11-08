@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ФитФактор — дневник питания и тренировок</title>
-  <meta name="description" content="ФитФактор — дневник питания, тренировок и замеров для Android. Записи хранятся на телефоне.">
+  <meta name="description" content="ФитФактор — калории, БЖУ, тренировки и замеры в одном дневнике для Android. Без регистрации, записи хранятся на телефоне.">
   <link rel="icon" href="logo.png">
   <style>
     :root {
@@ -39,8 +39,8 @@
       box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
     }
     h1 { margin: 1.2rem 0 0.4rem; font-size: 2.6rem; letter-spacing: -0.03em; }
-    .lead { max-width: 36rem; margin: 0 auto; color: var(--muted); font-size: 1.15rem; }
-    nav { margin-top: 1.4rem; }
+    .lead { max-width: 38rem; margin: 0 auto; color: var(--muted); font-size: 1.15rem; }
+    nav { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
     nav a {
       color: var(--text);
       text-decoration: none;
@@ -48,17 +48,49 @@
       border-radius: 999px;
       padding: 0.45rem 0.9rem;
     }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    h2.section { margin: 2.6rem 0 1rem; font-size: 1.6rem; letter-spacing: -0.02em; }
+    .intro { max-width: 46rem; color: var(--muted); font-size: 1.05rem; }
+    .pains { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem; }
+    .pain {
+      border-left: 3px solid var(--orange);
+      padding: 0.2rem 0 0.2rem 0.9rem;
+    }
+    .pain b { display: block; margin-bottom: 0.2rem; }
+    .pain span { color: var(--muted); }
+    .shots {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding: 0.4rem 0 1rem;
+      scroll-snap-type: x mandatory;
+    }
+    figure { margin: 0; flex: 0 0 220px; scroll-snap-align: start; }
+    figure img {
+      width: 220px;
+      height: auto;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+      display: block;
+    }
+    figcaption { margin-top: 0.5rem; color: var(--muted); font-size: 0.92rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     article {
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 18px;
       padding: 1.1rem 1.15rem 0.4rem;
     }
-    article h2 { margin: 0 0 0.6rem; font-size: 1.15rem; }
-    .food h2 { color: var(--green); }
-    .train h2 { color: var(--gold); }
-    .body h2 { color: var(--blue); }
+    article h3 { margin: 0 0 0.6rem; font-size: 1.15rem; }
+    .food h3 { color: var(--green); }
+    .train h3 { color: var(--gold); }
+    .body h3 { color: var(--blue); }
+    .norm h3 { color: var(--orange); }
+    .private {
+      margin-top: 1rem;
+      background: linear-gradient(135deg, #1d150c, var(--card));
+    }
+    .private h3 { color: var(--orange); }
     .note { margin: 1.4rem 0 2.5rem; color: var(--muted); }
     .policy {
       background: #f6f1e6;
@@ -70,9 +102,11 @@
     .policy h2 { margin-top: 0; color: #1a1a1a; }
     .policy a { color: #9a4d00; }
     @media (max-width: 800px) {
-      .grid { grid-template-columns: 1fr; }
+      .grid, .pains { grid-template-columns: 1fr; }
       h1 { font-size: 2.1rem; }
       .hero { padding-top: 2rem; }
+      figure { flex-basis: 180px; }
+      figure img { width: 180px; }
     }
   </style>
 </head>
@@ -80,27 +114,62 @@
   <header class="hero">
     <img class="logo" src="logo.png" alt="Логотип ФитФактора">
     <h1>ФитФактор</h1>
-    <p class="lead">Дневник питания, тренировок и замеров для Android. Записи остаются на телефоне.</p>
-    <nav><a href="#politika">Политика конфиденциальности</a></nav>
+    <p class="lead">Калории, БЖУ, тренировки и замеры в одном дневнике для Android. Без регистрации — записи остаются на вашем телефоне.</p>
+    <nav>
+      <a href="#ekrany">Экраны</a>
+      <a href="#vozmozhnosti">Возможности</a>
+      <a href="#politika">Политика конфиденциальности</a>
+    </nav>
   </header>
   <main>
+    <h2 class="section">Зачем он нужен</h2>
+    <p class="intro">Хотите похудеть, набрать форму или просто понять, сколько вы едите? Обычно всё упирается в мелочи: записывать еду долго, в зале непонятно, что делать дальше, а прогресса не видно неделями. ФитФактор собирает питание, тренировки и замеры в одном месте, чтобы вести дневник было быстро, а результат было видно.</p>
+    <div class="pains">
+      <div class="pain"><b>Записывать еду долго</b><span>Штрихкод с упаковки, свои продукты и блюда — день заполняется за минуту.</span></div>
+      <div class="pain"><b>В зале непонятно, что делать</b><span>Готовые программы, техника упражнений и таймер отдыха.</span></div>
+      <div class="pain"><b>Не видно, есть ли результат</b><span>Графики калорий, тоннажа, веса и обхватов за месяцы.</span></div>
+    </div>
+
+    <h2 class="section" id="ekrany">Как это выглядит</h2>
+    <div class="shots">
+      <figure><img src="screens/01-segodnya.jpg" alt="Экран «Сегодня»: норма калорий, БЖУ, вода и тренировка дня" loading="lazy"><figcaption>Весь день на одном экране</figcaption></figure>
+      <figure><img src="screens/02-dnevnik-edy.jpg" alt="Дневник еды за день с остатком калорий и БЖУ" loading="lazy"><figcaption>Сколько ещё можно съесть</figcaption></figure>
+      <figure><img src="screens/03-produkty-shtrihkod.jpg" alt="Каталог продуктов с поиском и кнопкой штрихкода" loading="lazy"><figcaption>Поиск, свои продукты и штрихкод</figcaption></figure>
+      <figure><img src="screens/04-grafiki-pitaniya.jpg" alt="График калорийности за месяц" loading="lazy"><figcaption>Графики питания за месяцы</figcaption></figure>
+      <figure><img src="screens/05-programmy.jpg" alt="Готовые программы тренировок" loading="lazy"><figcaption>Готовые программы для зала и дома</figcaption></figure>
+      <figure><img src="screens/06-tonnazh.jpg" alt="Тоннаж по упражнениям" loading="lazy"><figcaption>Тоннаж показывает рост нагрузки</figcaption></figure>
+      <figure><img src="screens/07-tehnika.jpg" alt="Описание техники упражнения" loading="lazy"><figcaption>Техника каждого упражнения</figcaption></figure>
+      <figure><img src="screens/08-kalkulyatory.jpg" alt="Калькулятор нормы калорий" loading="lazy"><figcaption>Своя норма по формулам</figcaption></figure>
+    </div>
+
+    <h2 class="section" id="vozmozhnosti">Возможности</h2>
     <section class="grid">
       <article class="food">
-        <h2>Питание</h2>
-        <p>Приёмы пищи, калории, белки, жиры, углеводы, клетчатка и вода. Свои продукты и блюда, поиск по словам и штрихкод камерой телефона.</p>
-        <p>Если кода нет в своём каталоге, состав запрашивается в Open Food Facts и сохраняется на телефоне.</p>
+        <h3>Еда за минуту</h3>
+        <p>Наведите камеру на штрихкод — продукт с калориями и БЖУ подставится сам. Если кода нет в своём каталоге, состав подтянется из Open Food Facts и останется на телефоне.</p>
+        <p>Поиск понимает слова в любом порядке. Свои продукты и блюда сохраняются один раз и дальше добавляются в пару касаний. Сверху дня видно, сколько калорий осталось и как набираются белки, жиры и углеводы.</p>
+      </article>
+      <article class="norm">
+        <h3>Своя норма, а не цифра из интернета</h3>
+        <p>Норма калорий считается по формулам Миффлина — Сан Жеора, Харриса — Бенедикта или Кэтча — МакАрдла с учётом активности и цели. Вода, клетчатка и БЖУ — в той же картине дня.</p>
+        <p>Калькуляторы: пульсовые зоны, повторный максимум, ИМТ, отношение талии к росту и к бёдрам.</p>
       </article>
       <article class="train">
-        <h2>Тренировки</h2>
-        <p>Каталог упражнений с техникой, готовые программы и свои планы. Подходы, суперсеты, отдых и тоннаж.</p>
-        <p>Графики показывают прогресс по упражнениям, группам мышц и общему объёму.</p>
+        <h3>Тренировки без блокнота</h3>
+        <p>Восемь готовых программ для зала и дома, свои планы, подходы, суперсеты и таймер отдыха. У каждого упражнения есть описание техники.</p>
+        <p>Тоннаж считается сам, поэтому видно, растёт ли нагрузка.</p>
       </article>
       <article class="body">
-        <h2>Замеры и нормы</h2>
-        <p>Вес, обхваты и фото с датой. Нормы калорий, калькуляторы и напоминания о еде и тренировке.</p>
-        <p>Подсказка калорий через AI включается отдельно. Дневник работает и без неё.</p>
+        <h3>Прогресс, который видно</h3>
+        <p>Вес, обхваты и фото замеров с датой на снимке. Графики питания, тренировок и замеров за 1, 3 или 6 месяцев либо за свои даты, линия средних и текстовый отчёт.</p>
+        <p>Когда весы стоят на месте, графики подскажут, что изменилось. Напоминания о еде и тренировке, светлая и тёмная тема.</p>
       </article>
     </section>
+    <article class="private">
+      <h3>Ваши записи — только ваши</h3>
+      <p>Регистрация не нужна. Дневник хранится в памяти телефона и не уходит в облачную копию Android. Копию дневника вы сохраняете сами в настройках. Рекламы в приложении нет.</p>
+      <p>Подсказка калорий через AI включается только после отдельного согласия: в запрос уходят название, штрихкод, тип и бренд продукта, но не дневник, вес или фото.</p>
+    </article>
     <p class="note">Стартовые цифры продуктов и упражнений справочные. Приложение не ставит диагноз и не заменяет врача. Вопросы: <a href="mailto:mail@kovalev-dg86.ru">mail@kovalev-dg86.ru</a>.</p>
 
     <section class="policy" id="politika">
